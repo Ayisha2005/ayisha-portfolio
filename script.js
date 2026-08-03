@@ -34,7 +34,40 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(raf);
   }
 
-  // 4. Mouse Parallax Effect on Hero
+  // 4. Zero-Delay Instant Custom Cursor
+  const cursorRing = document.getElementById('cursor-ring');
+  const cursorDot = document.getElementById('cursor-dot');
+
+  if (cursorRing && cursorDot) {
+    let mouseX = 0;
+    let mouseY = 0;
+    let rAF = null;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (!rAF) {
+        rAF = requestAnimationFrame(() => {
+          cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+          cursorRing.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+          rAF = null;
+        });
+      }
+    });
+
+    const hoverTargets = document.querySelectorAll('a, button, input, textarea, .magnetic-btn');
+    hoverTargets.forEach((target) => {
+      target.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-hover');
+      });
+      target.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-hover');
+      });
+    });
+  }
+
+  // 5. Mouse Parallax Effect on Hero
   const heroParallax = document.getElementById('hero-parallax-container');
   if (heroParallax) {
     window.addEventListener('mousemove', (e) => {
@@ -53,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. Dynamic Typing Animation
+  // 6. Dynamic Typing Animation
   const typingElement = document.getElementById('typing-text');
   if (typingElement) {
     const roles = [
@@ -93,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     typeEffect();
   }
 
-  // 6. Scroll Progress Bar & ScrollSpy
+  // 7. Scroll Progress Bar & ScrollSpy
   const scrollProgress = document.getElementById('scroll-progress');
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -122,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 7. Theme Toggle Switch
+  // 8. Theme Toggle Switch
   const themeToggleBtn = document.getElementById('theme-toggle');
   const htmlElement = document.documentElement;
 
@@ -147,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 8. Mobile Menu Toggle
+  // 9. Mobile Menu Toggle
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
@@ -164,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 9. Magnetic Buttons
+  // 10. Magnetic Buttons
   const magneticBtns = document.querySelectorAll('.magnetic-btn');
   magneticBtns.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
@@ -203,7 +236,7 @@ function downloadResume() {
   document.body.removeChild(link);
 }
 
-// EmailJS Credentials
+// Latest EmailJS Credentials
 const EMAILJS_SERVICE_ID = "service_gwa0w4c";
 const EMAILJS_TEMPLATE_ID = "template_2b49j5e";
 const EMAILJS_PUBLIC_KEY = "0zFsSwyaOaKfKshHO";
