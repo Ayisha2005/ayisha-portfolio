@@ -42,6 +42,59 @@ html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 {
   color: #475569 !important;
 }
 
+/* Zero-Delay Custom Cursor */
+@media (min-width: 768px) {
+  body.has-custom-cursor {
+    cursor: none !important;
+  }
+  body.has-custom-cursor a, 
+  body.has-custom-cursor button, 
+  body.has-custom-cursor input, 
+  body.has-custom-cursor textarea {
+    cursor: none !important;
+  }
+}
+
+#cursor-ring, #cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+
+#cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin-left: -17px;
+  margin-top: -17px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(99, 102, 241, 0.65);
+  background: rgba(99, 102, 241, 0.08);
+  transition: transform 0.02s linear, width 0.15s ease, height 0.15s ease, margin 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+#cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: #06b6d4;
+  transition: transform 0.01s linear;
+}
+
+/* Hover expand */
+.cursor-hover #cursor-ring {
+  width: 48px;
+  height: 48px;
+  margin-left: -24px;
+  margin-top: -24px;
+  border-color: #06b6d4;
+  background: rgba(6, 182, 212, 0.15);
+}
+
 /* Magnetic Button Smooth Feel */
 .magnetic-btn {
   will-change: transform;
