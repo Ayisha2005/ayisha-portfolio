@@ -42,21 +42,6 @@ html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 {
   color: #475569 !important;
 }
 
-/* Cursor Customization */
-@media (min-width: 768px) {
-  body {
-    cursor: none !important;
-  }
-  a, button, input, textarea, select {
-    cursor: none !important;
-  }
-}
-
-#cursor-ring, #cursor-dot {
-  pointer-events: none;
-  will-change: transform;
-}
-
 /* Magnetic Button Smooth Feel */
 .magnetic-btn {
   will-change: transform;
