@@ -34,56 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(raf);
   }
 
-  // 4. Dual-Ring Cursor with GSAP
-  const cursorRing = document.getElementById('cursor-ring');
-  const cursorDot = document.getElementById('cursor-dot');
-
-  if (cursorRing && cursorDot && typeof gsap !== 'undefined') {
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-
-      gsap.to(cursorDot, {
-        x: mouseX,
-        y: mouseY,
-        duration: 0.05,
-        ease: 'power2.out',
-      });
-
-      gsap.to(cursorRing, {
-        x: mouseX,
-        y: mouseY,
-        duration: 0.25,
-        ease: 'power2.out',
-      });
-    });
-
-    const hoverTargets = document.querySelectorAll('a, button, input, textarea, .magnetic-btn');
-    hoverTargets.forEach((target) => {
-      target.addEventListener('mouseenter', () => {
-        gsap.to(cursorRing, {
-          scale: 1.6,
-          borderColor: '#06b6d4',
-          backgroundColor: 'rgba(6, 182, 212, 0.15)',
-          duration: 0.2,
-        });
-      });
-
-      target.addEventListener('mouseleave', () => {
-        gsap.to(cursorRing, {
-          scale: 1.0,
-          borderColor: 'rgba(99, 102, 241, 0.6)',
-          backgroundColor: 'rgba(99, 102, 241, 0.1)',
-          duration: 0.2,
-        });
-      });
-    });
-  }
-
-  // 5. Mouse Parallax Effect
+  // 4. Mouse Parallax Effect on Hero
   const heroParallax = document.getElementById('hero-parallax-container');
   if (heroParallax) {
     window.addEventListener('mousemove', (e) => {
@@ -102,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Dynamic Typing Animation
+  // 5. Dynamic Typing Animation
   const typingElement = document.getElementById('typing-text');
   if (typingElement) {
     const roles = [
@@ -142,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     typeEffect();
   }
 
-  // 7. Scroll Progress Bar & ScrollSpy
+  // 6. Scroll Progress Bar & ScrollSpy
   const scrollProgress = document.getElementById('scroll-progress');
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -171,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 8. Theme Toggle Switch
+  // 7. Theme Toggle Switch
   const themeToggleBtn = document.getElementById('theme-toggle');
   const htmlElement = document.documentElement;
 
@@ -196,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 9. Mobile Menu Toggle
+  // 8. Mobile Menu Toggle
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
@@ -213,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 10. Magnetic Buttons
+  // 9. Magnetic Buttons
   const magneticBtns = document.querySelectorAll('.magnetic-btn');
   magneticBtns.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
@@ -252,7 +203,7 @@ function downloadResume() {
   document.body.removeChild(link);
 }
 
-// Latest EmailJS Credentials
+// EmailJS Credentials
 const EMAILJS_SERVICE_ID = "service_gwa0w4c";
 const EMAILJS_TEMPLATE_ID = "template_2b49j5e";
 const EMAILJS_PUBLIC_KEY = "0zFsSwyaOaKfKshHO";
@@ -311,7 +262,6 @@ async function handleContactSubmit(event) {
     btnIcon.outerHTML = '<svg id="submit-btn-icon" class="w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
   }
 
-  // Exact EmailJS template parameters matching your template
   const templateParams = {
     from_name: name,
     from_email: email,
