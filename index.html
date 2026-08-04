@@ -115,7 +115,7 @@
 
     <!-- STICKY GLASS HEADER -->
     <header class="sticky top-4 z-40 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-      <nav class="glass-panel rounded-full px-5 sm:px-7 py-3.5 flex items-center justify-between border border-white/10 shadow-2xl backdrop-blur-2xl bg-slate-900/80">
+      <nav class="glass-panel rounded-full px-5 sm:px-7 py-3.5 flex items-center justify-between border border-white/10 shadow-2xl backdrop-blur-2xl bg-slate-900/80 relative z-40">
         
         <a href="#hero" class="flex items-center gap-3 group">
           <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 via-cyan-400 to-emerald-400 p-[2px] transition-transform duration-300 group-hover:scale-105">
@@ -131,7 +131,8 @@
           </div>
         </a>
 
-        <div class="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-medium text-slate-300">
+        <!-- Desktop Navigation Bar (hidden on mobile < 768px) -->
+        <div class="hidden md:flex items-center gap-1 xl:gap-2 text-xs font-medium text-slate-300">
           <a href="#hero" class="nav-link px-3.5 py-2 rounded-full hover:text-white hover:bg-white/10 transition-all duration-200" data-section="hero">Home</a>
           <a href="#about" class="nav-link px-3.5 py-2 rounded-full hover:text-white hover:bg-white/10 transition-all duration-200" data-section="about">About</a>
           <a href="#skills" class="nav-link px-3.5 py-2 rounded-full hover:text-white hover:bg-white/10 transition-all duration-200" data-section="skills">Skills</a>
@@ -154,51 +155,51 @@
             <span>Resume PDF</span>
           </a>
 
-          <!-- Mobile Hamburger Menu Button (lg:hidden) -->
-          <button id="mobile-menu-btn" aria-label="Toggle Mobile Navigation Menu" class="lg:hidden p-2.5 rounded-full text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all active:scale-95 focus:outline-none">
+          <!-- Mobile Hamburger Menu Button (md:hidden < 768px) -->
+          <button id="mobile-menu-btn" onclick="toggleMobileMenu(event)" aria-label="Toggle Mobile Navigation Menu" class="md:hidden p-2.5 rounded-full text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all active:scale-95 focus:outline-none">
             <i data-lucide="menu" class="w-5 h-5 block" id="mobile-menu-icon-open"></i>
             <i data-lucide="x" class="w-5 h-5 hidden" id="mobile-menu-icon-close"></i>
           </button>
         </div>
       </nav>
 
-      <!-- Mobile Navigation Drawer Overlay -->
-      <div id="mobile-menu" class="hidden lg:hidden absolute left-4 right-4 top-20 z-50 p-6 glass-panel rounded-3xl border border-white/15 bg-slate-900/95 backdrop-blur-2xl shadow-2xl transition-all duration-300 transform scale-95 opacity-0">
+      <!-- Mobile Navigation Drawer Overlay (md:hidden < 768px) -->
+      <div id="mobile-menu" class="hidden md:hidden absolute left-4 right-4 top-20 z-50 p-6 glass-panel rounded-3xl border border-white/15 bg-slate-900/95 backdrop-blur-2xl shadow-2xl transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-auto">
         <div class="flex flex-col space-y-3 text-sm font-semibold">
-          <a href="#hero" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
+          <a href="#hero" onclick="closeMobileMenu()" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
             <span>Home</span>
             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
           </a>
-          <a href="#about" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
+          <a href="#about" onclick="closeMobileMenu()" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
             <span>About</span>
             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
           </a>
-          <a href="#skills" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
+          <a href="#skills" onclick="closeMobileMenu()" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
             <span>Skills</span>
             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
           </a>
-          <a href="#education" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
+          <a href="#education" onclick="closeMobileMenu()" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
             <span>Education</span>
             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
           </a>
-          <a href="#projects" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
+          <a href="#projects" onclick="closeMobileMenu()" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
             <span>Projects</span>
             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
           </a>
-          <a href="#certifications" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
+          <a href="#certifications" onclick="closeMobileMenu()" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
             <span>Certifications</span>
             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
           </a>
-          <a href="#resume" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
+          <a href="#resume" onclick="closeMobileMenu()" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
             <span>Resume</span>
             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
           </a>
-          <a href="#contact" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
+          <a href="#contact" onclick="closeMobileMenu()" class="mobile-nav-link py-3 px-4 rounded-2xl hover:bg-white/10 hover:text-cyan-300 text-slate-200 transition-colors flex items-center justify-between">
             <span>Contact</span>
             <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
           </a>
           <div class="pt-3 border-t border-white/10">
-            <a href="Ayisha_Parveen_A_Resume.pdf" download="Ayisha_Parveen_A_Resume.pdf" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg">
+            <a href="Ayisha_Parveen_A_Resume.pdf" download="Ayisha_Parveen_A_Resume.pdf" onclick="closeMobileMenu()" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg">
               <i data-lucide="download" class="w-4 h-4"></i>
               <span>Download Resume PDF</span>
             </a>
