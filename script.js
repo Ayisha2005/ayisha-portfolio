@@ -1,5 +1,52 @@
 // Interactive Logic for Ayisha Parveen A Portfolio
 
+// Global Mobile Menu Helpers (Accessible for inline onclick fallback & event listeners)
+function openMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('mobile-menu-icon-open');
+  const closeIcon = document.getElementById('mobile-menu-icon-close');
+
+  if (!mobileMenu) return;
+  mobileMenu.classList.remove('hidden');
+  setTimeout(() => {
+    mobileMenu.classList.remove('-translate-y-4', 'opacity-0', 'scale-95');
+    mobileMenu.classList.add('translate-y-0', 'opacity-100', 'scale-100');
+  }, 10);
+
+  if (openIcon) openIcon.classList.add('hidden');
+  if (closeIcon) closeIcon.classList.remove('hidden');
+}
+
+function closeMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('mobile-menu-icon-open');
+  const closeIcon = document.getElementById('mobile-menu-icon-close');
+
+  if (!mobileMenu) return;
+  mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'scale-100');
+  mobileMenu.classList.add('-translate-y-4', 'opacity-0', 'scale-95');
+  setTimeout(() => {
+    mobileMenu.classList.add('hidden');
+  }, 250);
+
+  if (openIcon) openIcon.classList.remove('hidden');
+  if (closeIcon) closeIcon.classList.add('hidden');
+}
+
+function toggleMobileMenu(e) {
+  if (e) {
+    e.stopPropagation();
+  }
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (!mobileMenu) return;
+
+  if (mobileMenu.classList.contains('hidden') || mobileMenu.classList.contains('opacity-0')) {
+    openMobileMenu();
+  } else {
+    closeMobileMenu();
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // 1. Initialize Lucide Icons
@@ -180,60 +227,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 9. Fully Functional Mobile Menu Toggle & Overlay Handler
+  // 9. Attach Outside Click Safety for Mobile Menu
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
-  const openIcon = document.getElementById('mobile-menu-icon-open');
-  const closeIcon = document.getElementById('mobile-menu-icon-close');
-
-  function openMobileMenu() {
-    if (!mobileMenu) return;
-    mobileMenu.classList.remove('hidden');
-    setTimeout(() => {
-      mobileMenu.classList.remove('scale-95', 'opacity-0');
-      mobileMenu.classList.add('scale-100', 'opacity-100');
-    }, 10);
-
-    if (openIcon) openIcon.classList.add('hidden');
-    if (closeIcon) closeIcon.classList.remove('hidden');
-  }
-
-  function closeMobileMenu() {
-    if (!mobileMenu) return;
-    mobileMenu.classList.remove('scale-100', 'opacity-100');
-    mobileMenu.classList.add('scale-95', 'opacity-0');
-    setTimeout(() => {
-      mobileMenu.classList.add('hidden');
-    }, 250);
-
-    if (openIcon) openIcon.classList.remove('hidden');
-    if (closeIcon) closeIcon.classList.add('hidden');
-  }
-
-  function toggleMobileMenu(e) {
-    if (e) {
-      e.stopPropagation();
-    }
-    if (!mobileMenu) return;
-    if (mobileMenu.classList.contains('hidden') || mobileMenu.classList.contains('opacity-0')) {
-      openMobileMenu();
-    } else {
-      closeMobileMenu();
-    }
-  }
 
   if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-
-    // Close when clicking navigation links
-    const mobileNavLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
-    mobileNavLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        closeMobileMenu();
-      });
-    });
-
-    // Close when clicking outside the menu
     document.addEventListener('click', (e) => {
       if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
         if (!mobileMenu.classList.contains('hidden')) {
