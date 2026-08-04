@@ -180,20 +180,66 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 9. Mobile Menu Toggle
+  // 9. Fully Functional Mobile Menu Toggle & Overlay Handler
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
-  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  const openIcon = document.getElementById('mobile-menu-icon-open');
+  const closeIcon = document.getElementById('mobile-menu-icon-close');
+
+  function openMobileMenu() {
+    if (!mobileMenu) return;
+    mobileMenu.classList.remove('hidden');
+    setTimeout(() => {
+      mobileMenu.classList.remove('scale-95', 'opacity-0');
+      mobileMenu.classList.add('scale-100', 'opacity-100');
+    }, 10);
+
+    if (openIcon) openIcon.classList.add('hidden');
+    if (closeIcon) closeIcon.classList.remove('hidden');
+  }
+
+  function closeMobileMenu() {
+    if (!mobileMenu) return;
+    mobileMenu.classList.remove('scale-100', 'opacity-100');
+    mobileMenu.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+      mobileMenu.classList.add('hidden');
+    }, 250);
+
+    if (openIcon) openIcon.classList.remove('hidden');
+    if (closeIcon) closeIcon.classList.add('hidden');
+  }
+
+  function toggleMobileMenu(e) {
+    if (e) {
+      e.stopPropagation();
+    }
+    if (!mobileMenu) return;
+    if (mobileMenu.classList.contains('hidden') || mobileMenu.classList.contains('opacity-0')) {
+      openMobileMenu();
+    } else {
+      closeMobileMenu();
+    }
+  }
 
   if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
 
+    // Close when clicking navigation links
+    const mobileNavLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
     mobileNavLinks.forEach(link => {
       link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
+        closeMobileMenu();
       });
+    });
+
+    // Close when clicking outside the menu
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        if (!mobileMenu.classList.contains('hidden')) {
+          closeMobileMenu();
+        }
+      }
     });
   }
 
@@ -229,14 +275,14 @@ function downloadResume() {
   showToast('Downloading Resume PDF... 📄');
 
   const link = document.createElement('a');
-  link.href = '/resume/Ayisha_Parveen_A_Resume.pdf';
+  link.href = 'Ayisha_Parveen_A_Resume.pdf';
   link.download = 'Ayisha_Parveen_A_Resume.pdf';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 }
 
-// Latest EmailJS Credentials
+// EmailJS Credentials
 const EMAILJS_SERVICE_ID = "service_gwa0w4c";
 const EMAILJS_TEMPLATE_ID = "template_2b49j5e";
 const EMAILJS_PUBLIC_KEY = "0zFsSwyaOaKfKshHO";
