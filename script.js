@@ -1,4 +1,4 @@
-// High-Performance Interactive Logic for Ayisha Parveen A Portfolio
+// Ultra-Smooth 60 FPS Interactive Logic for Ayisha Parveen A Portfolio
 
 // Global Mobile Menu Helpers
 function openMobileMenu() {
@@ -63,7 +63,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 3. Dynamic Typing Animation
+  // 3. Ultra-Smooth 60 FPS GPU-Accelerated Custom Cursor
+  const cursorRing = document.getElementById('cursor-ring');
+  const cursorDot = document.getElementById('cursor-dot');
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  if (cursorRing && cursorDot && !isTouchDevice && window.innerWidth >= 768) {
+    let mouseX = -100;
+    let mouseY = -100;
+    let currentX = -100;
+    let currentY = -100;
+    let animFrameId = null;
+    let isTabActive = true;
+
+    // Passive mouse move listener to record coordinates
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    }, { passive: true });
+
+    // 60 FPS rAF Animation loop (animating ONLY translate3d)
+    function renderCursor() {
+      if (!isTabActive) return;
+
+      // Fast lerp for smooth near-zero delay (0.4 factor)
+      currentX += (mouseX - currentX) * 0.4;
+      currentY += (mouseY - currentY) * 0.4;
+
+      cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+      cursorRing.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+
+      animFrameId = requestAnimationFrame(renderCursor);
+    }
+
+    // Start loop
+    animFrameId = requestAnimationFrame(renderCursor);
+
+    // Pause when tab is inactive
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isTabActive = false;
+        if (animFrameId) cancelAnimationFrame(animFrameId);
+      } else {
+        isTabActive = true;
+        animFrameId = requestAnimationFrame(renderCursor);
+      }
+    });
+
+    // Hover effect on interactive elements
+    const hoverTargets = document.querySelectorAll('a, button, input, textarea');
+    hoverTargets.forEach((target) => {
+      target.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-hover');
+      }, { passive: true });
+      target.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-hover');
+      }, { passive: true });
+    });
+  } else {
+    // Remove custom cursor class on mobile / touch
+    document.body.classList.remove('has-custom-cursor');
+    if (cursorRing) cursorRing.style.display = 'none';
+    if (cursorDot) cursorDot.style.display = 'none';
+  }
+
+  // 4. Dynamic Typing Animation
   const typingElement = document.getElementById('typing-text');
   if (typingElement) {
     const roles = [
@@ -103,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     typeEffect();
   }
 
-  // 4. Lightweight Scroll Progress & ScrollSpy
+  // 5. Unblocked Passive Scroll Progress & ScrollSpy
   const scrollProgress = document.getElementById('scroll-progress');
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -140,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  // 5. Theme Toggle Switch
+  // 6. Theme Toggle Switch
   const themeToggleBtn = document.getElementById('theme-toggle');
   const htmlElement = document.documentElement;
 
@@ -165,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Outside Click Safety for Mobile Menu
+  // 7. Outside Click Safety for Mobile Menu
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
 
