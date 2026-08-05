@@ -66,7 +66,11 @@
   <!-- html2pdf.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
-<body class="bg-[#080c14] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-300 relative overflow-x-hidden font-sans">
+<body class="bg-[#080c14] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-300 relative overflow-x-hidden font-sans has-custom-cursor">
+
+  <!-- GPU Accelerated Premium Custom Cursor -->
+  <div id="cursor-ring" class="hidden md:block"></div>
+  <div id="cursor-dot" class="hidden md:block"></div>
 
   <!-- Scroll Progress Bar -->
   <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-indigo-500 via-cyan-400 to-emerald-400 z-50 transition-all duration-150 w-0"></div>
