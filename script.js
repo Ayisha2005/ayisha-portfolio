@@ -1,6 +1,6 @@
-// Interactive Logic for Ayisha Parveen A Portfolio
+// High-Performance Interactive Logic for Ayisha Parveen A Portfolio
 
-// Global Mobile Menu Helpers (Accessible for inline onclick fallback & event listeners)
+// Global Mobile Menu Helpers
 function openMobileMenu() {
   const mobileMenu = document.getElementById('mobile-menu');
   const openIcon = document.getElementById('mobile-menu-icon-open');
@@ -27,7 +27,7 @@ function closeMobileMenu() {
   mobileMenu.classList.add('-translate-y-4', 'opacity-0', 'scale-95');
   setTimeout(() => {
     mobileMenu.classList.add('hidden');
-  }, 250);
+  }, 200);
 
   if (openIcon) openIcon.classList.remove('hidden');
   if (closeIcon) closeIcon.classList.add('hidden');
@@ -54,86 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
   }
 
-  // 2. Initialize EmailJS with Public Key
+  // 2. Initialize EmailJS
   if (typeof emailjs !== 'undefined') {
     try {
       emailjs.init("0zFsSwyaOaKfKshHO");
-      console.log("EmailJS SDK initialized successfully with Public Key: 0zFsSwyaOaKfKshHO");
     } catch (e) {
-      console.error("EmailJS Initialization Error:", e);
+      console.error("EmailJS Init Error:", e);
     }
   }
 
-  // 3. Lenis Smooth Scroll
-  let lenis = null;
-  if (typeof Lenis !== 'undefined') {
-    lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 2,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-  }
-
-  // 4. Zero-Delay Instant Custom Cursor
-  const cursorRing = document.getElementById('cursor-ring');
-  const cursorDot = document.getElementById('cursor-dot');
-
-  if (cursorRing && cursorDot) {
-    let mouseX = 0;
-    let mouseY = 0;
-    let rAF = null;
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-
-      if (!rAF) {
-        rAF = requestAnimationFrame(() => {
-          cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-          cursorRing.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-          rAF = null;
-        });
-      }
-    });
-
-    const hoverTargets = document.querySelectorAll('a, button, input, textarea, .magnetic-btn');
-    hoverTargets.forEach((target) => {
-      target.addEventListener('mouseenter', () => {
-        document.body.classList.add('cursor-hover');
-      });
-      target.addEventListener('mouseleave', () => {
-        document.body.classList.remove('cursor-hover');
-      });
-    });
-  }
-
-  // 5. Mouse Parallax Effect on Hero
-  const heroParallax = document.getElementById('hero-parallax-container');
-  if (heroParallax) {
-    window.addEventListener('mousemove', (e) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
-      const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
-
-      if (typeof gsap !== 'undefined') {
-        gsap.to(heroParallax, {
-          rotationY: x * 6,
-          rotationX: -y * 6,
-          duration: 0.5,
-          ease: 'power1.out',
-        });
-      }
-    });
-  }
-
-  // 6. Dynamic Typing Animation
+  // 3. Dynamic Typing Animation
   const typingElement = document.getElementById('typing-text');
   if (typingElement) {
     const roles = [
@@ -173,36 +103,44 @@ document.addEventListener('DOMContentLoaded', () => {
     typeEffect();
   }
 
-  // 7. Scroll Progress Bar & ScrollSpy
+  // 4. Lightweight Scroll Progress & ScrollSpy
   const scrollProgress = document.getElementById('scroll-progress');
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
 
+  let isTicking = false;
   window.addEventListener('scroll', () => {
-    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (window.scrollY / totalHeight) * 100;
-    if (scrollProgress) {
-      scrollProgress.style.width = `${progress}%`;
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+        if (scrollProgress) {
+          scrollProgress.style.width = `${progress}%`;
+        }
+
+        let currentSection = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 140;
+          const sectionHeight = section.offsetHeight;
+          if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+            currentSection = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-section') === currentSection) {
+            link.classList.add('active');
+          }
+        });
+
+        isTicking = false;
+      });
+      isTicking = true;
     }
+  }, { passive: true });
 
-    let currentSection = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 140;
-      const sectionHeight = section.offsetHeight;
-      if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-        currentSection = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('data-section') === currentSection) {
-        link.classList.add('active');
-      }
-    });
-  });
-
-  // 8. Theme Toggle Switch
+  // 5. Theme Toggle Switch
   const themeToggleBtn = document.getElementById('theme-toggle');
   const htmlElement = document.documentElement;
 
@@ -227,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 9. Attach Outside Click Safety for Mobile Menu
+  // 6. Outside Click Safety for Mobile Menu
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
 
@@ -241,25 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 10. Magnetic Buttons
-  const magneticBtns = document.querySelectorAll('.magnetic-btn');
-  magneticBtns.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-    });
-
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transform = 'translate(0px, 0px)';
-    });
-  });
-
 });
 
 // Global Helpers
-
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -267,7 +189,7 @@ function scrollToTop() {
 // Download PDF Resume Helper
 function downloadResume() {
   if (typeof confetti === 'function') {
-    confetti({ particleCount: 100, spread: 90, origin: { y: 0.6 } });
+    confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
   }
 
   showToast('Downloading Resume PDF... 📄');
@@ -354,7 +276,6 @@ async function handleContactSubmit(event) {
 
     if (typeof emailjs !== 'undefined') {
       emailjsResult = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY);
-      console.log("EmailJS Success Response:", emailjsResult);
     } else {
       throw new Error("EmailJS SDK is not loaded.");
     }
@@ -370,7 +291,7 @@ async function handleContactSubmit(event) {
 
     // Success Feedback
     if (typeof confetti === 'function') {
-      confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
     }
 
     showToast('Message sent successfully!');
@@ -391,42 +312,12 @@ async function handleContactSubmit(event) {
   }
 }
 
-async function handleNewsletterSubmit(event) {
-  event.preventDefault();
-  const emailInput = document.getElementById('newsletter-email');
-  const email = emailInput?.value || '';
-
-  if (!email) return;
-
-  try {
-    const res = await fetch('/api/newsletter', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      if (typeof confetti === 'function') {
-        confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
-      }
-      showToast('Subscribed to updates successfully!');
-      emailInput.value = '';
-    } else {
-      showToast(data.error || 'Email already subscribed.');
-    }
-  } catch (err) {
-    showToast('Subscribed to project updates!');
-    if (emailInput) emailInput.value = '';
-  }
-}
-
 function showToast(message) {
   const container = document.getElementById('toast-container');
   if (!container) return;
 
   const toast = document.createElement('div');
-  toast.className = 'glass-panel rounded-2xl px-5 py-3.5 border border-indigo-500/40 bg-slate-900/95 text-white text-xs font-semibold shadow-2xl flex items-center gap-2.5 pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0';
+  toast.className = 'glass-panel rounded-2xl px-5 py-3.5 border border-indigo-500/40 bg-slate-900/95 text-white text-xs font-semibold shadow-xl flex items-center gap-2.5 pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0';
   toast.innerHTML = `
     <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
     <span>${message}</span>
